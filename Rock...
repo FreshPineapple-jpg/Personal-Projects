@@ -1,0 +1,58 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    char yourMove, computerMove;
+    int randomNum, won, lost, tied;
+    won = 0;
+    lost = 0;
+    tied = 0;
+    cout<<"Rock-paper-scissors shoo:";
+    srand (time(NULL));
+    randomNum = rand() % 3; //0 means rock. 1 means paper. 2 means scissors;
+    cin>>yourMove;
+    while (yourMove!='q'){
+        if (yourMove=='r'||yourMove=='R'){
+            if (randomNum == 0){
+                cout << "I'm rock, tied..." << endl;
+                tied++;
+            }else if (randomNum == 1){
+                cout <<  "I'm rock, you won :(" << endl;
+                lost++;
+            }else{
+                cout <<  "I'm rock, I won :)" << endl;
+                won++;
+            }
+        }else if (yourMove=='p'||yourMove=='P'){
+            if (randomNum == 0){
+                cout << "I'm paper, I won :)" << endl;
+                won++;
+            }else if (randomNum == 1){
+                cout <<  "I'm paper, tied..." << endl;
+                tied++;
+            }else{
+                cout <<  "I'm paper, you won :(" << endl;
+                lost++;
+            }
+        }else if (yourMove=='s'||yourMove=='S'){
+            if (randomNum == 0){
+                cout << "I'm scissors, you won :(" << endl;
+                lost++;
+            }else if (randomNum == 1){
+                cout << "I'm scissors, I won :)" << endl;
+                won++;
+            }else{
+                cout << "I'm scissors, tied..." << endl;
+                tied++;
+            }
+        }else{
+            cout << "Oops..." << endl;
+        }
+        cout<<"Rock-paper-scissors shoo:";
+        cin>>yourMove;
+        randomNum = rand() % 3;
+    }
+    cout << "You won " << won << ", lost " << lost << ", tied " << tied << ". You won " << setprecision (2) << fixed << (won*1.00)/(won+lost)*100.00 << "%." << endl;
+    return 0;
+}
