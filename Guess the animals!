@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cstdlib>
+#include <algorithm>
+#include <random>
+
+using namespace std;
+
+void print(vector <string> a){ //function for printing name list;
+    for (int i = 0; i < a.size(); i++) {
+        cout << i+1 << ": " << a[i] << endl; 
+    }
+}
+
+int main() {
+    string input = "temp"; string word = ""; string extraSpace; int numRight = 0; int currentLevel;
+    vector<string> animals; vector<string> chosen; 
+    srand(time(NULL));
+    cout << "Enter at least five animal names, e.g., cat, dog, etc..." << endl;
+    
+    while (true) { //collects the animal names;
+        getline(cin, input);
+        if (input == ""){ 
+            break;
+        }
+        extraSpace = input + ' ';
+        for (int i = 0;i < extraSpace.length();i++){
+            if (extraSpace.at(i) == ' ') {
+                animals.push_back(word);
+                word = "";
+            } 
+            else {
+                word = word + extraSpace.at(i);
+            }
+        }
+    }
+    
+    print(animals);
+    
+    while (true){
+        int randNum = (rand() % 3) + 1; //random number of words 
+        auto rng = default_random_engine {};
+        shuffle(begin(animals), end(animals), rng); 
+        for (int i = 0;i < randNum;i++){
+            chosen.push_back(animals[i]);
+        }
+        string wordShuffled = ""; 
+        for (int i = 0; i < chosen.size(); i++) {
+            wordShuffled = wordShuffled + chosen[i]; 
+        }
+        chosen.clear();
+        random_shuffle(wordShuffled.begin(), wordShuffled.end()); //shuffles the words
+        cout << "What are " << randNum << " animals in \"" << wordShuffled << "\" ? ";
+        getline(cin, input);
+        if (input == "quit"){
+            cout << "Bye..." << endl;
+            return 0;
+        }
+        else if (input == "?") {
+            print(animals);
+            getline(cin, input);
+        } 
+        extraSpace = input + ' ';
+        for (int i = 0;i < extraSpace.length();i++){ //checks if EACH word is correct
+            if (extraSpace.at(i) == ' ') {
+                    if (find(animals.begin(), animals.end(), word) != animals.end()) {
+                        numRight++;
+                    }
+                word = "";
+            } 
+            else {
+                word = word + extraSpace.at(i);
+            }
+        }
+        if (numRight != randNum){
+            cout << "Nope" << endl;
+        } else {
+            cout << "Yes" << endl;
+        }
+        numRight = 0;
+    }
+    
+    return 0;
+}
